@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: loan-service
+
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: hr
+    password: hr
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+kafka:
+  bootstrap-servers: localhost:9092
+  topic:
+    loans: loans-topic

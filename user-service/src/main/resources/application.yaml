@@ -1,0 +1,26 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/bank-realm
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+keycloak:
+  auth-server-url: http://localhost:8080
+  realm: master
+  admin-client-id: user-service
+  admin-client-secret: Q8z3gxzJIBHRcu77YFMAa4rWY7HhMgty
+  admin-username: anusha
+  admin-password: admin
+
