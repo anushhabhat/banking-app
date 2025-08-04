@@ -1,0 +1,28 @@
+spring:
+  application:
+  name: user-service
+  datasource:
+    url: jdbc:oracle:thin:@localhost:1521/XEPDB1 # Change to your SID or Service Name if needed
+    username: hr
+    password: hr
+    driver-class-name: oracle.jdbc.OracleDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: update   # Or 'validate', 'create', 'create-drop'
+    show-sql: true
+#    database-platform: org.hibernate.dialect.Oracle21cDialect
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  port: 8080
+  # Optional: Naming strategy if you want to control table/column naming
+  # jpa:
+  #   naming:
+  #     physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
