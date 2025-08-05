@@ -1,9 +1,11 @@
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import { AccountModalComponent } from '../../components/account-modal/account-modal.component';
 import { TransferModalComponent } from '../../components/transfer-modal/transfer-modal.component';
+import { CardModalComponent } from '../../components/card-modal/card-modal.component';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 
@@ -15,7 +17,8 @@ import { User } from '../../models/user.model';
     HeaderComponent, 
     FooterComponent, 
     AccountModalComponent, 
-    TransferModalComponent
+    TransferModalComponent,
+    CardModalComponent
   ],
   template: `
     <div class="min-h-screen flex flex-col">
@@ -100,7 +103,11 @@ import { User } from '../../models/user.model';
                 <p class="text-gray-600 text-center leading-relaxed">
                   Manage your Credit and Debit cards, view rewards, and more.
                 </p>
-                <a href="#" class="btn-primary mt-4 inline-block text-white font-semibold py-2 px-4 rounded-full text-sm shadow-md hover:shadow-lg">Manage Cards</a>
+                <button 
+                  (click)="showCardModal()"
+                  class="btn-primary mt-4 inline-block text-white font-semibold py-2 px-4 rounded-full text-sm shadow-md hover:shadow-lg">
+                  Manage Cards
+                </button>
               </div>
             </div>
           </div>
@@ -122,6 +129,11 @@ import { User } from '../../models/user.model';
         (onClose)="hideTransferModal()"
         (onTransferSuccess)="onTransferSuccess()">
       </app-transfer-modal>
+
+      <app-card-modal
+        [isVisible]="showCardModalFlag"
+        (onClose)="hideCardModal()">
+      </app-card-modal>
     </div>
   `
 })
@@ -131,6 +143,7 @@ export class DashboardComponent implements OnInit {
   userId: number = 0;
   showAccountModalFlag: boolean = false;
   showTransferModalFlag: boolean = false;
+ showCardModalFlag: boolean = false;
 
   constructor(private authService: AuthService) {}
 
@@ -175,6 +188,14 @@ export class DashboardComponent implements OnInit {
   hideTransferModal(): void {
     this.showTransferModalFlag = false;
   }
+
+ showCardModal(): void {
+   this.showCardModalFlag = true;
+ }
+
+ hideCardModal(): void {
+   this.showCardModalFlag = false;
+ }
 
   onTransferSuccess(): void {
     // Refresh account data if needed

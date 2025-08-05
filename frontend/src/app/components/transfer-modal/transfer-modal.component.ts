@@ -92,7 +92,7 @@ export class TransferModalComponent implements OnInit, OnChanges {
     amount: 0
   };
 
-  constructor(private accountService: AccountService) {}
+  constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
     // leave empty — use ngOnChanges instead
@@ -107,7 +107,7 @@ export class TransferModalComponent implements OnInit, OnChanges {
   loadAccounts(): void {
     this.accountService.getUserAccounts(this.userId).subscribe({
       next: (accounts) => {
-        this.accounts = accounts.filter(account => 
+        this.accounts = accounts.filter(account =>
           account && account.accountNumber
         );
       },
@@ -123,19 +123,29 @@ export class TransferModalComponent implements OnInit, OnChanges {
       return;
     }
 
+    const userId = Number(sessionStorage.getItem('userId'));
+    if (!userId) {
+      this.showTransferMessage('User not logged in.', 'error');
+      return;
+    }
+
     this.isTransferring = true;
     this.transferMessage = '';
 
-    this.accountService.transferFunds(this.transferData).subscribe({
+    const payload = {
+      ...this.transferData,
+      fromUserId: userId
+    };
+
+
+    this.accountService.transferFunds(payload).subscribe({
       next: () => {
         this.showTransferMessage('Transfer successful!', 'success');
-        this.resetForm();
-        // this.onTransferSuccess.emit();
         setTimeout(() => {
+          this.resetForm();
           this.onTransferSuccess.emit();
           this.onClose.emit();
-        }, 3000);
-
+        }, 1500);
       },
       error: (error) => {
         let errorMessage = 'Error sending the money.';

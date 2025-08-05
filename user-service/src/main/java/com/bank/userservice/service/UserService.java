@@ -1,6 +1,8 @@
 package com.bank.userservice.service;
 
 
+import java.util.List;
+
 import com.bank.common.dto.AuthRequest;
 import com.bank.common.dto.AuthResponse;
 import com.bank.common.dto.SignUpRequest;
@@ -14,4 +16,6 @@ public interface UserService {
 
 	public AuthResponse authenticate(AuthRequest authRequest);
 	public void deleteUser(Long id);
+
+	public List<UserDTO> getAllUsers();
 }

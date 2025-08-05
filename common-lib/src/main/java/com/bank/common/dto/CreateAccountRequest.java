@@ -1,30 +1,32 @@
 package com.bank.common.dto;
 
-import java.math.BigDecimal;
 
-
-
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.Data;
+import java.math.BigDecimal;
 
 @Data
 public class CreateAccountRequest {
 
-	@NotNull
+    @NotNull(message = "User ID is required")
     private Long userId;
-    @NotBlank
+
+    @NotBlank(message = "Account type is required")
     private String accountType;
-    @NotNull
-    @DecimalMin(value ="0.00", inclusive = true ,message = "Initial balance should be greater then 0")
+
+    @NotNull(message = "Initial balance is required")
+    @DecimalMin(value = "0.00", inclusive = true, message = "Initial balance should be greater than or equal to 0")
     private BigDecimal initialBalance;
-    @NotBlank
+
+    @NotBlank(message = "Aadhaar number is required")
     private String aadhaarNumber;
-    @NotBlank
+
+    @NotBlank(message = "Address is required")
     private String address;
-    @NotBlank
+
+    @NotBlank(message = "State is required")
     private String state;
-    @NotBlank
+
+    @NotBlank(message = "Pin code is required")
     private String pinCode;
 }

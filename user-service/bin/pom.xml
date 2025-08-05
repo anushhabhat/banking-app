@@ -31,10 +31,19 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>com.bank</groupId>
+			<artifactId>common-lib</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -44,7 +53,6 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -63,11 +71,19 @@
 			<artifactId>ojdbc11</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.bank</groupId>
-			<artifactId>common-lib</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+		<dependency>
+    			<groupId>org.springframework.cloud</groupId>
+    			<artifactId>spring-cloud-starter-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-tracing-bridge-brave</artifactId>
 		</dependency>
 
+		
 
 	</dependencies>
 

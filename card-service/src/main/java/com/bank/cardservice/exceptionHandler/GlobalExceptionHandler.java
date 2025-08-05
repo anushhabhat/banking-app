@@ -8,11 +8,23 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import feign.FeignException;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+	@ExceptionHandler(FeignException.class)
+    public ResponseEntity<?> handleFeignException(FeignException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("error", "Account Service Error");
+        error.put("message", ex.getMessage());
+        return ResponseEntity.status(ex.status()).body(error);
+    }
+	
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex, WebRequest request) {
         ErrorResponse error = new ErrorResponse(
@@ -34,19 +46,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationErrors(MethodArgumentNotValidException ex, WebRequest request) {
-        String message = ex.getBindingResult().getFieldErrors()
-                .stream()
-                .map(err -> err.getField() + ": " + err.getDefaultMessage())
-                .collect(Collectors.joining(", "));
-
-        ErrorResponse error = new ErrorResponse(
-            message,
-            HttpStatus.BAD_REQUEST.value(),
-            "Validation Failed",
-            request.getDescription(false).replace("uri=", "")
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+            errors.put(error.getField(), error.getDefaultMessage())
         );
-        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(Exception.class)

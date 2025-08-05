@@ -3,6 +3,7 @@ package com.bank.cardservice.service;
 
 
 import com.bank.cardservice.config.AccountClient;
+
 import com.bank.cardservice.exceptionHandler.ResourceNotFoundException;
 import com.bank.cardservice.mapper.CardMapper;
 import com.bank.cardservice.model.Card;
@@ -36,7 +37,7 @@ public class CardService {
     public CardResponseDTO createCard(CardRequestDTO cardRequestDTO) {
         // Fetch account using Feign client
         AccountDTO account = accountClient.getAccountByAccountNumber(cardRequestDTO.getAccountNumber())
-                .orElseThrow(() -> new RuntimeException("Account not found with account number: " + cardRequestDTO.getAccountNumber()));
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with account number: " + cardRequestDTO.getAccountNumber()));
 
         // Auto-generate 3-digit CVV
         String cvv = String.format("%03d", random.nextInt(1000));
@@ -65,14 +66,14 @@ public class CardService {
         try {
             return CardType.valueOf(input.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid card type: " + input);
+            throw new IllegalArgumentException("Invalid card type: " + input);
         }
     }
     public CardIssuer parseCardIssuer(String input) {
         try {
             return CardIssuer.valueOf(input.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Invalid Issuer : " + input);
+            throw new IllegalArgumentException("Invalid Issuer : " + input);
         }
     }
     public List<CardResponseDTO> getAllCards() {
@@ -94,7 +95,7 @@ public class CardService {
 
     public List<CardResponseDTO> getCardsByAccountNumber(String accountNumber) {
         AccountDTO account = accountClient.getAccountByAccountNumber(accountNumber)
-                .orElseThrow(() -> new RuntimeException("Account not found with account number: " + accountNumber));
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found with account number: " + accountNumber));
 
         return cardRepository.findByAccount(account.getId()).stream()
                 .map(CardMapper::toDTO)

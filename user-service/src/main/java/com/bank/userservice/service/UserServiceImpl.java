@@ -11,6 +11,10 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -67,4 +71,12 @@ public class UserServiceImpl implements UserService{
         userRepository.delete(user);
         // Database ON DELETE CASCADE handles account deletion
     }
+
+	@Override
+	public List<UserDTO> getAllUsers() {
+		return userRepository.findAll()
+				.stream()
+				.map(userMapper::toDTO)
+				.collect(Collectors.toList());
+	}
 }

@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import com.bank.cardservice.service.CardService;
 import com.bank.common.dto.CardRequestDTO;
 import com.bank.common.dto.CardResponseDTO;
-
 import jakarta.validation.Valid;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/v1/cards")
 public class CardController {

@@ -2,6 +2,7 @@ package com.bank.userservice.controller;
 
 
 
+import java.util.List;
 import java.util.logging.Logger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,7 @@ import com.bank.userservice.service.UserService;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-
 @CrossOrigin(origins = "http://localhost:4200")
-//@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -33,6 +32,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable(name="id") Long id) {
         return ResponseEntity.ok(userService.getUser(id));
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @PostMapping("/signin")

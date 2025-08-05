@@ -10,7 +10,7 @@ import com.bank.loanService.service.LoanService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/loans")
+@RequestMapping("/api/v1/loans")
 public class LoanController {
 
     private final LoanService service;
