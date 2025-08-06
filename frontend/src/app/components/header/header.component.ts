@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.model';
 
 @Component({
@@ -10,40 +9,40 @@ import { User } from '../../models/user.model';
   template: `
     <header class="bg-white shadow-md py-4 sticky top-0 z-50">
       <div class="container mx-auto px-4 flex justify-between items-center">
-        <a href="#" class="text-2xl font-bold text-blue-800 rounded-md p-2 hover:bg-blue-50 transition-colors">
+        <span class="text-2xl font-bold text-blue-800 rounded-md p-2">
           Your Bank
-        </a>
+        </span>
         <nav>
           <ul class="flex space-x-6 items-center">
             <li *ngIf="!isDashboard">
-              <a href="#home" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
+              <button (click)="scrollToSection.emit('home')" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
                 Home
-              </a>
+              </button>
             </li>
             <li *ngIf="isDashboard">
-              <a href="#dashboard" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
+              <button (click)="scrollToSection.emit('dashboard')" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
                 Dashboard
-              </a>
+              </button>
             </li>
             <li>
-              <a href="#services" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
+              <button (click)="scrollToSection.emit('services')" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
                 Services
-              </a>
+              </button>
             </li>
             <li *ngIf="!isDashboard">
-              <a href="#about" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
+              <button (click)="scrollToSection.emit('about')" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
                 About Us
-              </a>
+              </button>
             </li>
             <li *ngIf="isDashboard">
-              <a href="#profile" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
-                Profile
-              </a>
+              <button (click)="scrollToSection.emit('profile')" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
+                Contact Us
+              </button>
             </li>
             <li *ngIf="!isDashboard">
-              <a href="#contact" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
+              <button (click)="scrollToSection.emit('contact')" class="text-gray-700 hover:text-blue-600 font-medium transition-colors rounded-md p-2 hover:bg-gray-100">
                 Contact
-              </a>
+              </button>
             </li>
             <li *ngIf="!currentUser">
               <button 
@@ -75,7 +74,10 @@ import { User } from '../../models/user.model';
 export class HeaderComponent {
   @Input() currentUser: User | null = null;
   @Input() isDashboard: boolean = false;
+
   @Output() onLogin = new EventEmitter<void>();
   @Output() onRegister = new EventEmitter<void>();
   @Output() onLogout = new EventEmitter<void>();
+
+  @Output() scrollToSection = new EventEmitter<string>();
 }

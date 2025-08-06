@@ -91,3 +91,72 @@ export class LoanDashboardComponent implements OnInit {
 
   }
 }
+
+
+// import { Component, Input, Output, EventEmitter } from '@angular/core';
+// import { CommonModule } from '@angular/common';
+// import { FormsModule } from '@angular/forms';
+// import { HttpClientModule } from '@angular/common/http';
+// import { LoanService } from '../../services/loan.service'; // adjust path as needed
+
+// @Component({
+//   selector: 'app-loan-dashboard-modal',
+//   standalone: true,
+//   imports: [CommonModule, FormsModule, HttpClientModule],
+//   templateUrl: './loan-dashboard.modal.html'
+// })
+// export class LoanDashboardModalComponent {
+//   @Input() isVisible: boolean = false;
+//   @Input() userId: number = 0;
+//   @Output() onClose = new EventEmitter<void>();
+
+//   loanAmount: number = 0;
+//   termMonths: number = 0;
+//   loanType: string = '';
+//   repayLoanNumber: string = '';
+//   accountNumber: string = '';
+//   loanMessage: string = '';
+//   repayEMIMessage: string = '';
+//   loans: any[] = [];
+
+//   constructor(private loanService: LoanService) {}
+
+//   ngOnInit() {
+//     this.fetchLoans();
+//   }
+
+//   fetchLoans() {
+//     this.loanService.getLoansByUserId(this.userId).subscribe(loans => {
+//       this.loans = loans;
+//     });
+//   }
+
+//   applyLoan() {
+//     this.loanService.applyLoan(this.userId, this.loanAmount, this.termMonths, this.loanType).subscribe({
+//       next: res => {
+//         this.loanMessage = 'Loan Applied Successfully!';
+//         this.fetchLoans();
+//       },
+//       error: err => {
+//         this.loanMessage = 'Loan Application Failed.';
+//       }
+//     });
+//   }
+
+//   repayEMI() {
+//     this.loanService.repayEMI(this.repayLoanNumber, this.accountNumber).subscribe({
+//       next: res => {
+//         this.repayEMIMessage = 'EMI Repaid Successfully!';
+//         this.fetchLoans();
+//       },
+//       error: err => {
+//         const errorText = typeof err.error === 'string' ? err.error : (err.message || 'Failed to repay EMI');
+//         this.repayEMIMessage = 'Error repaying EMI: ' + errorText;
+//       }
+//     });
+//   }
+
+//   closeModal() {
+//     this.onClose.emit();
+//   }
+// }

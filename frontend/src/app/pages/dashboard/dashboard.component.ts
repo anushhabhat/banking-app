@@ -13,20 +13,22 @@ import { User } from '../../models/user.model';
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    CommonModule, 
-    HeaderComponent, 
-    FooterComponent, 
-    AccountModalComponent, 
+    CommonModule,
+    HeaderComponent,
+    FooterComponent,
+    AccountModalComponent,
     TransferModalComponent,
     CardModalComponent
   ],
   template: `
     <div class="min-h-screen flex flex-col">
-      <app-header 
+      <app-header
         [currentUser]="currentUser"
         [isDashboard]="true"
-        (onLogout)="logout()">
+        (onLogout)="logout()"
+        (scrollToSection)="scrollTo($event)">
       </app-header>
+
 
       <main class="flex-1">
         <!-- Welcome Section -->
@@ -38,9 +40,10 @@ import { User } from '../../models/user.model';
             <p class="text-lg md:text-xl mb-10 max-w-3xl mx-auto opacity-90 animate-fade-in">
               Manage your finances with ease and explore our services below.
             </p>
-            <a href="#services" class="btn-primary inline-block text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-              Explore Services
-            </a>
+            <button (click)="scrollToServices()" class="btn-primary inline-block text-white font-semibold py-3 px-8 rounded-full text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
+  Explore Services
+</button>
+
           </div>
         </section>
 
@@ -143,9 +146,22 @@ export class DashboardComponent implements OnInit {
   userId: number = 0;
   showAccountModalFlag: boolean = false;
   showTransferModalFlag: boolean = false;
- showCardModalFlag: boolean = false;
+  showCardModalFlag: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) { }
+
+  scrollTo(sectionId: string): void {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  scrollToServices(): void {
+    this.scrollTo('services');
+  }
+
+
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
@@ -163,7 +179,7 @@ export class DashboardComponent implements OnInit {
     if (!this.currentUser) {
       const storedUserId = sessionStorage.getItem('userId');
       const storedUserName = sessionStorage.getItem('userName');
-      
+
       if (storedUserId && storedUserName) {
         this.userId = parseInt(storedUserId);
         this.userName = storedUserName;
@@ -189,13 +205,13 @@ export class DashboardComponent implements OnInit {
     this.showTransferModalFlag = false;
   }
 
- showCardModal(): void {
-   this.showCardModalFlag = true;
- }
+  showCardModal(): void {
+    this.showCardModalFlag = true;
+  }
 
- hideCardModal(): void {
-   this.showCardModalFlag = false;
- }
+  hideCardModal(): void {
+    this.showCardModalFlag = false;
+  }
 
   onTransferSuccess(): void {
     // Refresh account data if needed
