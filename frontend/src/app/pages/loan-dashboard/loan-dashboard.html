@@ -1,0 +1,86 @@
+<div class="container mx-auto p-6">
+  <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">Loan Services Dashboard</h1>
+
+  <!-- Loan List -->
+  <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-semibold mb-4">Your Loans</h2>
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr class="bg-blue-600 text-white">
+          <th class="p-3">Loan Number</th>
+          <th class="p-3">Type</th>
+          <th class="p-3">Amount</th>
+          <th class="p-3">Interest Rate</th>
+          <th class="p-3">EMI Amount</th>
+          <th class="p-3">Remaining</th>
+          <th class="p-3">Issue Date</th>
+          <th class="p-3">Status</th>
+          <th class="p-3">Next EMI</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <tr *ngFor="let loan of loans">
+          <td class="p-3 border-b">{{ loan.loanNumber }}</td>
+          <td class="p-3 border-b">{{ loan.loanType }}</td>
+          <td class="p-3 border-b">₹{{ loan.amount.toFixed(2) }}</td>
+          <td class="p-3 border-b">{{ loan.interestRate }}%</td>
+          <td class="p-3 border-b">₹{{ loan.emiAmount.toFixed(2) }}</td>
+          <td class="p-3 border-b">₹{{ loan.remainingAmount.toFixed(2) }}</td>
+          <td class="p-3 border-b">{{ loan.issueDate }}</td>
+          <td class="p-3 border-b">{{ loan.status }}</td>
+          <td class="p-3 border-b">{{ loan.nextEMI }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Issue Loan -->
+  <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+    <h2 class="text-2xl font-semibold mb-4">Issue New Loan</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-gray-700">Amount</label>
+        <input type="number" [(ngModel)]="loanAmount" class="w-full p-2 border rounded" />
+      </div>
+      <div>
+        <label class="block text-gray-700">Term (Months)</label>
+        <input type="number" [(ngModel)]="termMonths" class="w-full p-2 border rounded" />
+      </div>
+      <div>
+        <label class="block text-gray-700">Loan Type</label>
+        <select [(ngModel)]="loanType" class="w-full p-2 border rounded">
+          <option value="Personal">Personal</option>
+          <option value="Savings">Savings</option>
+          <option value="Motor">Motor</option>
+        </select>
+      </div>
+      <div class="flex items-end">
+        <button (click)="issueLoan()" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Issue Loan</button>
+      </div>
+    </div>
+    <p *ngIf="issueLoanMessage" class="mt-4 text-sm" [ngClass]="{ 'text-green-600': issueLoanMessage.includes('success'), 'text-red-600': issueLoanMessage.includes('Error') }">
+      {{ issueLoanMessage }}
+    </p>
+  </div>
+
+  <!-- Repay EMI -->
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h2 class="text-2xl font-semibold mb-4">Repay EMI</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block text-gray-700">Loan Number</label>
+        <input type="text" [(ngModel)]="repayLoanNumber" class="w-full p-2 border rounded" placeholder="e.g. LN44749531" />
+      </div>
+      <div>
+        <label class="block text-gray-700">Account Number</label>
+        <input type="text" [(ngModel)]="accountNumber" class="w-full p-2 border rounded" placeholder="e.g. 445396429695" />
+      </div>
+      <div class="flex items-end">
+        <button (click)="repayEMI()" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Repay EMI</button>
+      </div>
+    </div>
+    <p *ngIf="repayEMIMessage" class="mt-4 text-sm" [ngClass]="{ 'text-green-600': repayEMIMessage.includes('₹'), 'text-red-600': repayEMIMessage.includes('Error') }">
+      {{ repayEMIMessage }}
+    </p>
+  </div>
+</div>

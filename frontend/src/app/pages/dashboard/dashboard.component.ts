@@ -91,7 +91,7 @@ import { User } from '../../models/user.model';
                 <p class="text-gray-600 text-center leading-relaxed">
                   Explore loan options or manage existing loans with ease.
                 </p>
-                <a href="#" class="btn-primary mt-4 inline-block text-white font-semibold py-2 px-4 rounded-full text-sm shadow-md hover:shadow-lg">View Loans</a>
+                <a href="/loans" class="btn-primary mt-4 inline-block text-white font-semibold py-2 px-4 rounded-full text-sm shadow-md hover:shadow-lg">View Loans</a>
               </div>
               <div class="bg-gray-50 p-8 rounded-xl card-shadow hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-1">
                 <div class="text-blue-600 text-5xl mb-4 text-center">
